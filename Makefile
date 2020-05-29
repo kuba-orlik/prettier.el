@@ -1,8 +1,9 @@
 PANDOC := ${HOME}/.local/bin/pandoc
+TAR := gtar
 
 package: README COPYING COPYING-diff-match-patch prettier-pkg.el prettier.el prettier-el.js.gz.base64 bootstrap-min.js dir prettier.info
 	$(eval VERSION := $(shell emacs -batch --eval='(progn (require '"'"'package) (find-file "prettier.el") (princ (package-version-join (package-desc-version (package-buffer-info)))))'))
-	env COPYFILE_DISABLE=true gtar --transform 's,^,prettier-${VERSION}/,' -cf prettier-$(VERSION).tar $^
+	env COPYFILE_DISABLE=true ${TAR} --transform 's,^,prettier-${VERSION}/,' -cf prettier-$(VERSION).tar $^
 
 COPYING-diff-match-patch: node_modules/diff-match-patch/LICENSE
 	cp $^ $@
